@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "player.h"
 #include "map.h"
+#include "view.h"
 using namespace sf;
 
 int main(){
@@ -12,10 +13,9 @@ int main(){
     Sprite map_sprite; 
     map_sprite.setTexture(map_texture);
 
-
-    view.reset(FloatRect(0,0,640,480));
-
     RenderWindow window(VideoMode(800,800), "Horse'n Stone game");
+
+    view.reset(FloatRect(0,0,400,280));
 
     Player horse("stone.png", 50,25,90,90);
 
@@ -38,7 +38,7 @@ int main(){
             horse.update(time);
             horse.run_animate(time);
 
-
+            window.setView(view);
             window.clear(Color(108,235,235));
             for(int  h=0; h<HEIGHT_MAP;h++){
                 for(int w=0; w<WIDTH_MAP; w++){
@@ -60,7 +60,9 @@ int main(){
                     window.draw(map_sprite);
                 }
             }
+            
             move_cam(horse.get_x(), horse.get_y());
+            move_map(time);
             window.draw(horse.get_sprite());
             window.display();
 

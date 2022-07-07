@@ -27,6 +27,8 @@ public:
     void control();
     void run_animate(float time);
     void check_frame();
+    float get_x();
+    float get_y();
 
     
     Player(String user_file, float user_center_x, float user_center_y, float user_width, float user_height, int max_frame);
