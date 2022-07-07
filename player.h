@@ -141,3 +141,11 @@ void Player::update(float time){
     sprite.setPosition(center_x,center_y);
 
 }
+
+float Player::get_x(){
+    return center_x;
+}
+
+float Player::get_y(){
+    return center_y;
+}

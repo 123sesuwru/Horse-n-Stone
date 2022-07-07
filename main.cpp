@@ -13,6 +13,8 @@ int main(){
     map_sprite.setTexture(map_texture);
 
 
+    view.reset(FloatRect(0,0,640,480));
+
     RenderWindow window(VideoMode(800,800), "Horse'n Stone game");
 
     Player horse("stone.png", 50,25,90,90);
@@ -58,6 +60,7 @@ int main(){
                     window.draw(map_sprite);
                 }
             }
+            move_cam(horse.get_x(), horse.get_y());
             window.draw(horse.get_sprite());
             window.display();
 
