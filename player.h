@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include "map.h"
 using namespace sf;
 
 class Player{
@@ -29,6 +29,7 @@ public:
     void check_frame();
     float get_x();
     float get_y();
+    void map_touch();
 
     
     Player(String user_file, float user_center_x, float user_center_y, float user_width, float user_height, int max_frame);
@@ -150,4 +151,36 @@ float Player::get_x(){
 
 float Player::get_y(){
     return center_y;
+}
+
+void Player::map_touch(){
+    for(int i=center_y/HEIGHT_MAP_TILE; i<(center_y+height)/HEIGHT_MAP_TILE;i++){
+        for(int k=center_x/WIDTH_MAP_TILE; k<(center_x+width)/WIDTH_MAP_TILE;k++){
+            if(TileMap[i][k]=='s'){
+                if(change_y>0){
+                    center_y = i*HEIGHT_MAP_TILE-height;
+
+                }
+
+                if(change_y<0){
+                    center_y = i* HEIGHT_MAP_TILE+HEIGHT_MAP_TILE;
+                }
+                if(change_x>0){
+                    center_x = k*WIDTH_MAP_TILE-width;
+                }
+                if(change_x<0){
+                    center_x = k*WIDTH_MAP_TILE+WIDTH_MAP_TILE;
+                }
+            }
+
+            if(TileMap[i][k]=='h'){
+                TileMap[i][k] = 'g';
+            }
+
+            if(TileMap[i][k]=='l'){
+                
+            }
+        }
+
+    }
 }

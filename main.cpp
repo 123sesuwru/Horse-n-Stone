@@ -17,7 +17,7 @@ int main(){
 
     view.reset(FloatRect(0,0,400,280));
 
-    Player horse("stone.png", 50,25,90,90);
+    Player horse("stone.png", 100,100,90,90);
 
 
  Clock clock;
@@ -61,6 +61,7 @@ int main(){
                 }
             }
             
+            horse.map_touch();
             move_cam(horse.get_x(), horse.get_y());
             move_map(time);
             window.draw(horse.get_sprite());
