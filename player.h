@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include "map.h"
 using namespace sf;
 
 class Player{
@@ -18,6 +18,8 @@ private:
     float time;
     int max_frame;
     Sprite sprite;
+    int score;
+    int lives;
 public:
     Sprite get_sprite(){
         return sprite;
@@ -29,6 +31,9 @@ public:
     void check_frame();
     float get_x();
     float get_y();
+    void map_touch();
+    int get_score();
+    int get_lives();
 
     
     Player(String user_file, float user_center_x, float user_center_y, float user_width, float user_height, int max_frame);
@@ -48,6 +53,8 @@ Player::Player(String user_file, float user_center_x, float user_center_y, float
     change_x = 0;
     change_y = 0;
     current_rect = 0;
+    score = 0;
+    lives = 3;
 
     image.loadFromFile(file_name);
     texture.loadFromImage(image);
@@ -151,3 +158,53 @@ float Player::get_x(){
 float Player::get_y(){
     return center_y;
 }
+
+void Player::map_touch(){
+    for(int i=center_y/HEIGHT_MAP_TILE; i<(center_y+height)/HEIGHT_MAP_TILE;i++){
+        for(int k=center_x/WIDTH_MAP_TILE; k<(center_x+width)/WIDTH_MAP_TILE;k++){
+            if(TileMap[i][k]=='s'){
+                if(change_y>0){
+                    center_y = i*HEIGHT_MAP_TILE-height;
+
+                }
+
+                if(change_y<0){
+                    center_y = i* HEIGHT_MAP_TILE+HEIGHT_MAP_TILE;
+                }
+                if(change_x>0){
+                    center_x = k*WIDTH_MAP_TILE-width;
+                }
+                if(change_x<0){
+                    center_x = k*WIDTH_MAP_TILE+WIDTH_MAP_TILE;
+                }
+            }
+
+            if(TileMap[i][k]=='h'){
+                TileMap[i][k] = 'g';
+                int randomX = 1+rand()%(HEIGHT_MAP-2);
+                int randomY = 1+rand()%(HEIGHT_MAP-2);
+                TileMap[randomX][randomY] = 'h';
+                score++;
+            }
+
+            if(TileMap[i][k]=='l'){
+                TileMap[i][k] = 'g';
+                lives--;
+            }
+        }
+
+    }
+
+
+
+}
+
+int Player::get_score(){
+    return score;
+}
+
+int Player::get_lives(){
+    return lives;
+}
+
+

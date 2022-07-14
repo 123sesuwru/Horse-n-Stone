@@ -2,9 +2,23 @@
 #include "player.h"
 #include "map.h"
 #include "view.h"
+#include <ctime>
+#include <cstdlib>
 using namespace sf;
 
+
 int main(){
+    srand(time(NULL));
+    Font font;
+    font.loadFromFile("20016.ttf");
+    Text text("", font, 20);
+    text.setFillColor(Color::Black);
+    text.setStyle(Text::Bold | Text::Underlined);
+
+    Text lives("", font, 20);
+    text.setFillColor(Color::Black);
+    text.setStyle(Text::Bold | Text::Underlined);
+
     Image map_image;
     map_image.loadFromFile("map.png");
     Texture map_texture;
@@ -16,8 +30,7 @@ int main(){
     RenderWindow window(VideoMode(800,800), "Horse'n Stone game");
 
     view.reset(FloatRect(0,0,400,280));
-
-    Player horse("stone.png", 50,25,90,90);
+    Player horse("stone.png", 100,100,90,90);
 
 
  Clock clock;
@@ -54,6 +67,7 @@ int main(){
                     if(TileMap[h][w]=='g'){
                         map_sprite.setTextureRect(IntRect(64*1, 0, 64, 64));
                     }
+                    
 
                     map_sprite.setPosition(w*64, h*64);
 
@@ -61,9 +75,16 @@ int main(){
                 }
             }
             
+            horse.map_touch();
             move_cam(horse.get_x(), horse.get_y());
             move_map(time);
             window.draw(horse.get_sprite());
+            text.setString("Score : " + std::to_string(horse.get_score()));
+            text.setPosition(view.getCenter().x+120, view.getCenter().y-120);
+            window.draw(text);
+            lives.setString("Lives : " + std::to_string(horse.get_lives()));
+            lives.setPosition(view.getCenter().x+30, view.getCenter().y-120);
+            window.draw(lives);
             window.display();
 
         
