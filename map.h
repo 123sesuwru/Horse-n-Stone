@@ -7,21 +7,22 @@ const int WIDTH_MAP = 10;
 const int HEIGHT_MAP_TILE = 64;
 const int WIDTH_MAP_TILE = 64;
 
+
 String TileMap[HEIGHT_MAP] = {
 
-"ssssssssss",
+"ssssssslss",
 
-"sggghggggs",
+"sggghgglgs",
 
 "sgghgggggs",
 
-"sgggggghgs",
+"sggglgghgs",
 
-"sggghggggs",
+"sglghggggs",
 
 "sggggglggs",
 
-"sgggghgggs",
+"sglgghgggs",
 
 "ssssssssss"
 

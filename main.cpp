@@ -8,7 +8,8 @@ using namespace sf;
 
 
 int main(){
-    srand(time(NULL));
+    
+
     Font font;
     font.loadFromFile("20016.ttf");
     Text text("", font, 20);
@@ -18,6 +19,10 @@ int main(){
     Text lives("", font, 20);
     text.setFillColor(Color::Black);
     text.setStyle(Text::Bold | Text::Underlined);
+
+    Text textGameOver("", font, 40);
+    textGameOver.setFillColor(Color::Red);
+    textGameOver.setStyle(Text::Bold| Text::Underlined);
 
     Image map_image;
     map_image.loadFromFile("map.png");
@@ -46,8 +51,16 @@ int main(){
             if(event.type==Event::Closed)
                 window.close();
             }
+            if(horse.get_lives()>0){
+                horse.control();
+            }
 
-            horse.control();
+            if(horse.get_lives()==0){
+                textGameOver.setString("Game Over");
+                textGameOver.setPosition(view.getCenter().x-50, view.getCenter().y+40);
+                view.rotate(0.7);
+            }
+
             horse.update(time);
             horse.run_animate(time);
 
@@ -72,9 +85,20 @@ int main(){
                     map_sprite.setPosition(w*64, h*64);
 
                     window.draw(map_sprite);
+
                 }
             }
-            
+            if(horse.get_lives()==0){
+                Image troll_image;
+                troll_image.loadFromFile("troll.png");
+                Texture troll_texture;
+                troll_texture.loadFromImage(troll_image);
+                Sprite troll_sprite;
+                troll_sprite.setTexture(troll_texture);
+                troll_sprite.setPosition(horse.get_x(),horse.get_y());
+                window.draw(troll_sprite);
+
+            }
             horse.map_touch();
             move_cam(horse.get_x(), horse.get_y());
             move_map(time);
@@ -85,6 +109,7 @@ int main(){
             lives.setString("Lives : " + std::to_string(horse.get_lives()));
             lives.setPosition(view.getCenter().x+30, view.getCenter().y-120);
             window.draw(lives);
+            window.draw(textGameOver);
             window.display();
 
         

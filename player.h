@@ -67,23 +67,23 @@ void Player::control(){
 
     if(Keyboard::isKeyPressed(Keyboard::Right)){
         direction = 0;
-        speed=0.1;
+        speed=0.2;
 
     }
 
     if(Keyboard::isKeyPressed(Keyboard::Left)){
         direction = 1;
-        speed = 0.1;   
+        speed = 0.2;   
     }
 
     if(Keyboard::isKeyPressed(Keyboard::Up)){
         direction = 3;
-        speed = 0.1;        
+        speed = 0.2;        
     }
 
     if(Keyboard::isKeyPressed(Keyboard::Down)){
         direction = 2;
-        speed = 0.1;        
+        speed = 0.2;        
     }
 
 }
